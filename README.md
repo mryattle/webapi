@@ -98,7 +98,7 @@ Test environment should be used to run application and test static HTML contents
 
 ```bash
 # build docker images
-#docker-compose build
+#docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 # initialize postgresql data
 #docker-compose -f docker-compose.yml -f docker-compose.test.yml run laravel php artisan migrate
 #docker-compose -f docker-compose.yml -f docker-compose.test.yml run laravel php artisan db:seed --class=DatabaseSeeder
