@@ -214,3 +214,11 @@ heroku ps:scale web=1 -a webapi-static
 ```
 
 To ensure that you application is up and running you must visit https://webapi-static.herokuapp.com 
+
+## Demo
+
+- [Checkout demo](https://webapi-analysis.herokuapp.com/)
+
+## License
+
+MIT
