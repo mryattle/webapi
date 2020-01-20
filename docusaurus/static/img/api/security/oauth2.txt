@@ -1,0 +1,24 @@
+sequenceDiagram
+    User->>Browser: I want to use a secure endpoint
+    Browser->>UI: A user wants to use a secure endpoint i need
+    UI-->>Browser: This can be done but i need to know who he is first
+    Browser-->>User: Who are you ?
+    alt 1 factor authentication
+        User->>Browser: I'm email: fan@movies.com pass: 12345
+    else n factor autentication
+        User->>Browser: I'm email, pass, SMS code, ....
+    end
+    Browser->>A&A manager: Should be fan@movies.com
+    A&A manager-->>Browser: Yes it's him this is an [authorization code] you can get a token with it
+   Browser->>A&A manager: cool this is my [authorization code] can i have a [authorization token] to let him use a resource
+   A&A manager-->>Browser: sure fan@movies.com this is your  [authorization token]
+   Browser->>UI: I have this [authorization token] to let fan@movies.com use a protected resource
+   UI->>Secured resource: I have this [authorization token] to let fan@movies.com use a protected resource
+    alt Autenticated and authorized
+        Secured resource-->>UI: Ok fan@movies.com can use this resource
+        UI-->>Browser: user is authorized to use this resource
+        Browser-->>User: Here you are your requested endpoint 
+    else Autenticated but not authorized
+        Secured resource-->>UI: I'm sorry fan@movies.com can't use this resource
+        UI-->>Browser: user is not authorized to use this endpoint
+    end

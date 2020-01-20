@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+    docusaurus:
+        image: alpine:3.11.2
+        command: echo 'no docusaurus'
+    express:
+        image: alpine:3.11.2
+        command: echo 'no express'
+    nginx:     
+        image: alpine:3.11.2
+        command: echo 'no nginx'
+    laravel:     
+        volumes:
+            - ./laravel/.env:/opt/laravel/public_html/.env            

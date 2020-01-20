@@ -1,0 +1,4 @@
+sequenceDiagram
+    Note over Application, Notification resource: using event-driven paradigm
+    Notification resource->>Application: Something new [PUSH] 
+    Application-->>Notification resource: Great !

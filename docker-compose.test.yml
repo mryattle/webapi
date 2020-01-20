@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+    docusaurus:
+        image: alpine:3.11.2
+        command: echo 'no docusaurus'
+    express:
+        command: node server.js
+    nginx:     
+        volumes:
+            - ./docusaurus/build:/var/www/localhost/htdocs
+            - ./nginx/test.conf:/etc/nginx/conf.d/default.conf
+    laravel:     
+        volumes:
+            - ./laravel/.env:/opt/laravel/public_html/.env            

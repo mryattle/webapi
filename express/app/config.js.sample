@@ -1,0 +1,14 @@
+const config = {
+  google: {
+    project: '${PROJECT_NAME}'
+  },
+  jwt: {
+    secret: 'rUI9dipj5lHC8oFZBtW499nQ8E4tOJQKwUgu8EZMq5LuYNBC7eYaVwhfZ3cxEuoE',
+    algorithm: 'HS256'
+  },
+  hmac: {
+    secret: 'dCJ6rP9Ztvd3a5fakJujPBaXRBZ9cT2N',
+    maxInterval: 60
+  }
+};
+module.exports = config;

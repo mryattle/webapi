@@ -1,0 +1,11 @@
+sequenceDiagram
+    Note over Application, Notification resource: using request-response paradigm
+    loop Polling
+        alt New contents ?
+            Application->>Notification resource: Anything new ? [PULL]
+            Notification resource-->>Application: Something new :)
+        else
+            Application->>Notification resource: Anything new ? [PULL]
+            Notification resource-->>Application: Nothing :(
+        end    
+    end

@@ -1,0 +1,20 @@
+sequenceDiagram
+    Client-xServer: first request event 
+    activate Client
+    activate Server
+    deactivate Client
+    Server->>Server: elaborate first
+    Client-xServer: second request event 
+    activate Client
+    activate Server
+    deactivate Client
+    Server->>Server: elaborate second
+    Server-xClient: second response event
+    activate Client
+    deactivate Server
+    deactivate Client
+    Server-xClient: first response event
+    activate Client
+    deactivate Client
+    deactivate Server
+

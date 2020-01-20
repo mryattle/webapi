@@ -1,0 +1,18 @@
+FROM node:13.1.0-alpine
+
+# Create app directory
+WORKDIR /app
+
+RUN apk --update add rsync
+
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY docker/package*.json ./
+RUN npm install
+
+
+COPY . /tmp/express
+RUN rsync -r /tmp/express/app/ /app
+
+CMD node server.js --port=$PORT

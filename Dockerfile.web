@@ -1,0 +1,22 @@
+FROM alpine:3.10
+
+# Nginx
+RUN apk add --update --no-cache \
+	nginx openssl rsync
+RUN mkdir -p /run/nginx
+# forward request and error logs to docker log collector
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
+
+RUN apk add --update openssl bash
+RUN openssl req -newkey rsa -new -nodes -x509 -days 3650 -subj "/C=IT/ST=Italia/L=Padova/O=Università degli studi di Padova/OU=Corso di Laurea in Informatica/CN=webapi-paradigm.herokuapp.com:443/emailAddress=mr.yattle@gmail.com" -nodes -days 1095 -out /etc/ssl/certs/nginx.pem -keyout /etc/ssl/private/nginx.key
+
+COPY docusaurus/build /tmp/htdocs
+RUN rsync -r /tmp/htdocs/ /var/www/localhost/htdocs/
+
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+RUN mkdir -p /var/tmp/nginx/client_body
+COPY nginx/prod.conf /prod.conf
+COPY nginx/heroku.sh /heroku.sh
+RUN chmod 777 /heroku.sh
+CMD /bin/bash /heroku.sh $PORT

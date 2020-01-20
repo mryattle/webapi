@@ -1,0 +1,174 @@
+---
+id: webhook
+title: Webhook
+---
+
+A WebHook is just a URL that accepts an HTTP POST (GET, PUT, or DELETE). An API provider implementing WebHooks will simply POST a message to the configured endpoint when something happens. Unlike with request-response APIs, **with WebHooks, you can receive updates in real time**.  
+
+![Pushing new information to the webhook endpoint](/img/api/webhook-push.svg)
+
+**Without** web hook API **you might need to continuously poll the API** for new informations, doing so the application will spent most of the time querying the resource for new informations. 
+
+![Polling for new information with request-response paradigm](/img/api/webhook-polling.svg)
+
+WebHooks are great for easily sharing real-time data from one server to another server. From an app developer's point of view, it's typically easy to implement WebHooks because it simply requires creating a new HTTP endpoint to receive events. This means that they can generally reuse existing infrastructure. At the same time, supporting WebHooks adds new complexities, including the following: 
+
+- Failures and retries  - To ensure WebHooks are delivered successfully, it's important to build a system that will retry WebHook delivery on errors.
+- **Security** - Although there are standard ways of making REST API calls secure, security for WebHooks is still evolving. **With WebHooks, the onus is on app developers** to ensure that they've received a legitimate WebHook. That often leads to developers using unverified WebHooks.
+- Firewalls - Applications running behind firewalls can access APIs over HTTP, but they are unable to receive inbound traffic. For such applications, utilizing WebHooks is difficult and often not possible. 
+- Noise - Typically, each WebHook call represents one single event. When there are thousands of events happening in a short time that need to be sent via a single WebHook, it can be noisy. 
+
+## Securing webhook with HMAC
+
+In a common webhook scenario endpoints are commonly used during system integration using batch processes, doing so user interaction will not be present. The absence of user authentication and authorization (caused by the absence user interaction) lead to a different approach for securing webhook APIs.
+
+A **digital signature** is preferred in webhook context to verify the authenticity of a digital message or document. Using HMAC (hash-based message authentication code) an application key will be used to **digitally sign the messages exchanged**. Message signing key must be keep secret by communication parties in order to avoid messages counterfeiting.
+
+At the current time [Slack webhook api system](https://api.slack.com/messaging/webhooks) allows users to expose endpoint. The endpoint publication process is defined per user, using this approach authentication and authorization are not needed. All messages pushed to the webhook will inherit creator identity and privileges.
+
+
+## 2 minutes tutorial
+
+Let's test web hook using a sample Movie Chat application. **Movie chat** application **exposes a web hook API**. A remote server/application can use the Movie chat web hook to push new messages. Using the movie chat UI end users can observe messages that are sent via web hook in real-time. Movie chat application will generate an api_key that is used to identify user. Using an api_key we will ensure that different users message streams will not result mixed.
+
+### How to notify a new message
+
+Using a cURL client application (or either Javascript client if you OS can't use cURL utility) , we will act as an application/server that pushes messages to the Movie chat application. HTTP **POST** Verb seems to be appropriate to send/push new data to the chat application. Using a web hook we will raise an Event inside Movie chat application that will behave in real-time showing the message via UI. 
+
+As the digital signature is calculated before the message is submitted to the webhook only React live code will allow users to change the message.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TabItemCurlHmac from '@theme/TabItemCurlHmac';
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurlHmac value="bash" message='{"message":"Hey there have you ever watched Blade Runner ?"}'>
+
+```bash
+  curl --insecure -X POST  \
+    'https://${hostname}/api/webhook?api_key=${api_key}' \
+    -d '${message}' \
+    -H 'Authorization: HMAC ${hmac_signature}' \
+    -H 'Accept: text/json' \
+    -H 'Content-Type: application/json; charset=utf-8'
+```
+
+</TabItemCurlHmac>
+<TabItem value="jsx live">
+
+```jsx live
+class WebhookClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      unix_timestamp: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.unix_timestamp.subscribe(
+      function (value) {   
+        component.setState(state => ({ unix_timestamp: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }  
+  
+  signature(apiKey, message) {
+  	/* hmac-auth-express signature
+  		Signed data:
+  			* timestamp: to prevent replay attack (expiration period is defined globally)
+  			* method and url: to ensure origin
+  			* message: will be hashed using MD5 to create a fixed signature payload 
+  	*/
+  	return http_client.hmacSignature(this.state.unix_timestamp, 
+      'POST', `/webhook/?api_key=${apiKey}`, 
+      JSON.stringify(message));
+  }
+  
+  handleClick(apiKey) {
+    this.setState(state => ({ 
+      loading: true})); 
+    const message = {'message': 'Hey there have you ever watched Blade Runner ?'};
+    fetch(`/api/webhook/?api_key=${apiKey}`, {
+      method: 'POST',
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `HMAC ${this.state.unix_timestamp}:${this.signature(apiKey, message)}`,
+      },
+      body: JSON.stringify(message)
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: false, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick(http_client.api_key)}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick(http_client.api_key)}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>)       
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick(http_client.api_key)}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+You can observe response messages using Movie chat, the message submitted via webhook will display inside chat screen
+
+import ChatWebhook from '@theme/ChatWebhook';
+
+<ChatWebhook></ChatWebhook>

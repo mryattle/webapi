@@ -1,0 +1,26 @@
+FROM mryattle/laravel:1.1.0
+
+USER laravel
+WORKDIR /opt/laravel/public_html
+RUN /usr/bin/php7 /usr/local/bin/composer require tymon/jwt-auth="1.0.0-rc.5"
+RUN /usr/bin/php7 /usr/local/bin/composer update
+RUN /usr/bin/php7 /usr/local/bin/composer require nuwave/lighthouse="^4.6"
+# RUN /usr/bin/php7 /usr/local/bin/composer require beyondcode/laravel-websockets="^1.3"
+
+# USER root
+# RUN apk add --no-cache php7-curl
+
+# USER laravel
+# RUN /usr/bin/php7 /usr/local/bin/composer require pusher/pusher-php-server "^4.0"
+# RUN /usr/bin/php7 /usr/local/bin/composer require predis/predis="^1.1"
+
+USER root
+
+RUN apk --update add rsync
+
+# Laravel 
+USER root
+COPY . /tmp/laravel
+RUN rsync -r /tmp/laravel/ /opt/laravel/public_html/
+
+CMD php artisan serve --host=0.0.0.0 --port=$PORT

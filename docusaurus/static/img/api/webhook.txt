@@ -1,0 +1,11 @@
+sequenceDiagram
+    Polling app->>Server: Anything new ?
+    Server-->>Polling app: Nothing !
+    Polling app->>Server: Anything new ?
+    Server-->>Polling app: Nothing !
+    Server->>Webhook app: Something new
+    Webhook app-->>Server: Great !
+    Polling app->>Server: Anything new ?
+    Server-->>Polling app: Someting new :)
+    Polling app->>Server: Anything new ?
+    Server-->>Polling app: Nothing !

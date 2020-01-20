@@ -1,0 +1,154 @@
+---
+id: websocket
+title: WebSocket
+---
+
+WebSocket is a protocol used to establish a two-way streaming communication channel over a single Transport Control Protocol (TCP) connection. Although the protocol is generally used between a web client (e.g., a browser) and a server, it's sometimes used for server-to-server communication, as well. 
+The WebSocket protocol is supported by major browsers and often used by realtime applications.  
+WebSockets can enable full-duplex communication (server and client can communicate with each other simultaneously) at a low overhead. 
+
+![Websocket messages exchange](/img/api/websocket.gif)
+
+Additionally, they are designed to work over port 80 or 443, enabling them to work well with firewalls that might block other ports. This is an especially important consideration when it comes to enterprise developers. WebSockets are **great for fast, live streaming data and long-lived connections**. However, **be wary** if you plan to make these available on mobile devices or in regions **where connectivity can be spotty**. Clients are supposed to keep the connection alive. If the connection dies, the client needs to reinitiate it. There are also **issues related to scalability**. When using web sockets to connect applications it's important for developers to provide the right amount of resources to continuously keep alive all the connections needed to fulfill communication on both ends. The increasing number of connected applications can lead to performance issue.
+
+## 2 minutes tutorial
+
+Let's test web socket using a sample Blade Runner Chat application. Blade runner chat react to messages sent by the user. Questions submitted to chat application will be forwarded to Google dialogflow service, whenever dialogflow service answer is ready an event is emitted and sent back to chat application.
+
+![WebSocket chat](/img/api/websocket.svg)
+
+A web socket service will take care of keeping the connection alive to provide a full duplex channel, doing this a text data stream is established and messages exchanged between chat users and dialogflow service. 
+
+To test Blade Runner chat you can start with messages like:
+
+- Hello
+- Tell me something about the movie
+- Who's starring in it
+
+### Under the hood
+
+Users can submit messages through a  client that will establish a full duplex connection with the websocket service. The user submits questions using websocket react client. **Answers will be forwarded to client whenever an "answer event" is emitted**. Multiple client can subscribe the data streams, in our scenario both chat application and websocket react client will listen to answer events. The **/blade-runner-chat**  and **sessionId** parameters are used to specify a channel that both clients will join and share, answers emitted from this channel are rendered by both clients.
+
+#### Securing websocket
+
+HTTP protocol can rely on standards like HTTP Basic auth or OAuth to authenticate and authorize users. At the current time WebSocket Protocol can't benefit of authentication and authorization standards as described in [RFC 6455](https://tools.ietf.org/html/rfc6455#page-53)
+
+```
+10.5.  WebSocket Client Authentication
+
+   This protocol doesn't prescribe any particular way that servers can
+   authenticate clients during the WebSocket handshake.  The WebSocket
+   server can use any client authentication mechanism available to a
+   generic HTTP server, such as cookies, HTTP authentication, or TLS
+   authentication.
+```
+
+In the next example we will use an interesting feature of [Socket.IO](https://socket.io/docs/client-api/#With-query-parameters) library to perform authorization using JWT token. The JWT token will be send to the websocket server during connection initialization. Due to the library itself it's not possible to renew the query params while the connection is active, to solve this issue we will initialize the socket io client (and therefore the entire connection) any time that a new JWT token will be feed to the client.
+
+```jsx live
+class WebsocketClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { answer: null, 
+      error: 'Authentication is missing',
+      auth: false }
+    this.http_client_subscribe = null;
+    this.socket = null;     
+  }
+  
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {
+        if(component.socket !== null)
+            component.socket.close();
+        /*** Autentication
+        	Socket.IO https://socket.io/docs/server-api/#new-Server-httpServer-options is using distinct connections to:
+        	+ initialize websocket connection params via HTTP
+        	+ create a Websocket to exchange messages with clients
+        	RFC 6455 says "The WebSocket
+   server can use any client authentication mechanism available to a
+   generic HTTP server" https://tools.ietf.org/html/rfc6455#page-53, we will use Socket.IO HTTP connection to authenticate clients
+        */
+        component.socket = io('/blade-runner-chat', {
+          query: {
+            sessionId:  http_client.session_id,
+            token: value
+          }          
+        }).on('error', function (error) { 
+          // Authentication fail raises errors
+          component.setState(state => ({
+            auth: false, error: `${error}`}));
+        }).on('connect_error', function(error){
+          component.setState(state => ({
+            auth: false, error: `${error}`}));
+        }).on('connect', function(){
+          // When connection is established client authorization is implicit 
+          component.setState(state => ({
+            auth: true}));
+        }).on('disconnect', function(msg){
+        	// We don't know if next connection will be authorized
+          component.setState(state => ({
+            auth: true, error: 'Authentication is missing'}));
+        }).on('answer', function(msg){
+        	// User defined dialogflow messages event
+          component.setState(state => ({
+            answer: `${msg}`})); 
+        });         
+      },
+      function (error) {
+        component.setState(state => ({ answer: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      });     
+      
+  }  
+  
+  componentWillUnmount() {
+    if(this.socket !== null)
+      this.socket.close();
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();    
+  }    
+  
+  handleClick(message) {
+    this.socket.emit('question', message);
+  }  
+
+  render() {
+    if(!this.state.auth) {
+      return (
+      <div>
+        <div><span>{this.state.error}</span></div>
+      </div>
+      )
+    }
+ 
+    if(this.state.answer === null) {
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick('Hello')}>Ask</button> <span>Hello</span></div>
+      </div>
+      )
+    }
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick('Who\'s starring in it')}>Ask</button> <span>Who's starring in it</span></div>
+      <div id="response" className="post">
+        <div className="header">Answer</div>
+        <div className="body" style={{maxWidth: '36vw'}}>{this.state.answer}</div>
+      </div>
+    </div>
+    )
+  }
+}
+```
+
+You can observe response messages using Blade Runner Chat, the message submitted by the user using both chat send button and React live code will display inside chat screen
+
+import ChatWebsocket from '@theme/ChatWebsocket';
+
+<ChatWebsocket></ChatWebsocket>

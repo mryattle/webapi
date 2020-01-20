@@ -1,0 +1,503 @@
+---
+id: graphql
+title: GraphQL
+---
+
+GraphQL is a query language for APIs that has gained significant traction recently. It was developed internally by Facebook in 2012 before being publicly released in 2015 and has been adopted by API providers like GitHub, Yelp, and Pinterest. GraphQL allows clients to define the structure of the data required, and the server returns exactly that structure.
+
+Unlike REST and RPC APIs, GraphQL APIs need only a single URL endpoint.
+
+Similarly, you do not need different HTTP verbs to describe the operation. Instead, you indicate in the JSON body whether you're performing a query (reading) or a mutation (writing). GraphQL APIs support GET and POST verbs.  Despite this using **POST verb is more convinent** because using GET querystring force the user to transalte JSON inside url.
+
+GraphQL has a few key advantages over REST and RPC: 
+
+- Saves multiple round trips  - GraphQL enables clients to nest queries and fetch data across resources in a single request. Without GraphQL, this might require multiple HTTP calls to the server. This means mobile applications using GraphQL can be quick, even on slow network connections. 
+- Avoids versioning -  You can add new fields and types to a GraphQL API without affecting existing queries. Similarly, deprecating existing fields is easier. By doing log analysis, an API provider can figure out which clients are using a field. You can hide deprecated fields from tools and remove them when no clients are using them. With REST and RPC APIs, it's harder to figure out which clients are using a deprecated field, making removal more difficult.
+- Smaller payload size  - REST and RPC APIs often end up responding with data that clients might not ever use. With GraphQL, because clients can exactly specify what they need, the payload sizes can be smaller. GraphQL queries return predictable results while giving clients control over the data that is returned. 
+- Strongly typed - GraphQL is strongly typed. At development time, GraphQL type checking helps in ensuring that a query is syntactically correct and valid. This makes building high-quality, less error-prone clients easy. 
+- Introspection - Although there are external solutions like Swagger that help make exploring REST APIs easy, GraphQL is natively discoverable. It comes with GraphiQL, an in-browser IDE for exploring GraphQL. It lets users write, validate, and test GraphQL queries in a browser. 
+
+Although GraphQL has many advantages, one of its drawbacks is the complexity it adds for the API provider. The server needs to do additional processing to parse complex queries and verify parameters. Optimizing performance of GraphQL queries can be difficult, too. Internally, within a company, it's easy to predict the use cases and debug performance bottlenecks. When working with external developers, those use cases become difficult to understand and optimize for. When opening up GraphQL to third parties, you move the expense of managing multiple incoming requests to composing complicated queries on the backend depending on the request, the performance and impact to infrastructure can be highly variable.
+
+## 2 minutes tutorial
+
+Here you can try some GraphQL queries and check HTTP responses. All GraphQL queries can be tested using curl utility.
+
+You can copy & paste curl command in you command shell to test API response. Whenever curl utility is not available on your os you can try API using live editing Javascript code.
+
+### How to read a movie
+
+**Read** query is handled using HTTP Verb **POST**. We will use the same endpoint for all GraphQL queries. Naming conventions must be chosen before to expose APIs. When we read data from the server we perform a **query**. In our scenario we will read information about a movie, the query API itself will expose which parameters can be used to fetch data.  
+Our movie query will contain the attributes that the response will contains. Doing so it is possible to obtain a smaller payload size. Let's use the query  **movie** and check server response. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TabItemCurl from '@theme/TabItemCurl';
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl --insecure -X POST \
+  -H "Content-Type: application/json" \
+  -H 'Authorization: Bearer ${token}' \
+  -d '{"query":"query { movie(identifier: \"blade-runner\") { identifier title year duration director } }"}' \
+  https://${hostname}/api/graphql
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class GraphqlClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }  
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/graphql`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({"query":"query { movie(identifier: \"blade-runner\") { identifier title year duration director } }"})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>)
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### How to list all movies
+
+**List** query is handled using HTTP Verb **POST**. We will use the same endpoint for all GraphQL queries. Naming conventions must be chosen before to expose APIs. When we read data from the server we perform a **query**. In our scenario we will list all movies, the query API itself will expose which parameters can be used to fetch data. 
+
+Listing all movies can lead to a huge payload size, to avoid this behavior we will introduce pagination. The query will introduce **first** and **page** parameters to implement a simple limit offset mechanism.
+
+Our movie query will contain the attributes that the response will contains. Doing so it is possible to obtain a smaller payload size. Let's use the query  **movies** and check server response. 
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl --insecure -X POST \
+  -H 'Authorization: Bearer ${token}' \
+  -H "Content-Type: application/json" \
+  -d '{"query":"query { movies(first: 5  page:1) { data { identifier title year duration director } paginatorInfo { currentPage lastPage } } }"}' \
+  https://${hostname}/api/graphql
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class GraphqlClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  } 
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/graphql`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({"query":"query { movies(first: 5 page:1) { data { identifier title year duration director } paginatorInfo { currentPage lastPage } } }"})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status}));  
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>) 
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### How to rank a movie
+
+**Rank** query is handled using HTTP Verb **POST**. We will use the same endpoint for all GraphQL queries. Naming conventions must be chosen before to expose APIs. When we write data we perform a data **mutation**. In our scenario we will rank a movie, the query API itself will expose which parameters can be used to fetch data. 
+
+Our movie mutation will contain the attributes that the response will contains. Doing so it is possible to obtain a smaller payload size. Let's use the query  **rankMovie** and check server response. 
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl --insecure -X POST \
+  -H 'Authorization: Bearer ${token}' \
+  -H "Content-Type: application/json" \
+	-d '{"query":"mutation { rankMovie( movie: { identifier: \"blade-runner\" } rank: 10) { identifier title rank { rank } } }"}' \
+	https://${hostname}/api/graphql
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class GraphqlClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }  
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/graphql`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({"query":"mutation { rankMovie( movie: { identifier: \"blade-runner\" } rank: 10) { identifier title rank { rank } } }"})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status}));  
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>) 
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### How to update a movie
+
+**Update** query is handled using HTTP Verb **POST**. We will use the same endpoint for all GraphQL queries. Naming conventions must be chosen before to expose APIs. When we write data we perform a data **mutation**. In our scenario we will update a movie, the query API itself will expose which parameters can be used to fetch data. Moreover the mutation method will define which attributes can be updated. 
+
+Our movie mutation will contain the attributes that the response will contains. Doing so it is possible to obtain a smaller payload size. Let's use the query  **updateMovie** and check server response. 
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl --insecure -X POST \
+  -H 'Authorization: Bearer ${token}' \
+  -H "Content-Type: application/json" \
+	-d '{"query":"mutation { updateMovie(identifier: \"blade-runner\" title: \"Blade Runner\" year:1982 duration:\"1h 57min\" director:\"Ridley Scott\"){ identifier title director } }"}' \
+	https://${hostname}/api/graphql
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class GraphqlClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }  
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/graphql`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({"query":"mutation { updateMovie(identifier: \"blade-runner\" title: \"Blade Runner\" year:1982 duration:\"1h 57min\" director:\"Ridley Scott\"){ identifier title director } }"})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>)
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>

@@ -1,0 +1,522 @@
+---
+id: rest
+title: Representational State Transfer 
+---
+
+Representational State Transfer (REST) is the most popular choice for API development lately. The REST paradigm is used by providers like Google, Stripe, Twitter, and GitHub. REST is all about resources. A resource is an entity that can be identified, named, addressed, or handled on the web. REST APIs expose data as resources and use standard HTTP methods to represent Create, Read, Update, and Delete (CRUD) transactions against these resources. For instance, Stripe's API represents customers, charges, balance, refunds, events, files, and payouts as resources. 
+
+Here are some general rules REST APIs follow: 
+
+- Resources are part of URLs, like /movies. 
+- For each resource, two URLs are generally implemented: one for the collection, like /movies, and one for a specific element, like /movies/blade-runner. 
+- Nouns are used instead of verbs for resources. For example, instead of /getMovieInfo/blade-runner, use /movies/blade-runner. 
+- HTTP methods like GET, POST, UPDATE, and DELETE inform the server  about the action to be performed.
+- Standard HTTP response status codes are returned by the server indicating success or failure. Generally, codes in the 2XX range indicate success, 3XX codes indicate a resource has moved, and codes in the 4XX range indicate a client-side error (like a missing required parameter or too many requests). Codes in the 5XX range indicate server-side errors.
+- REST APIs might return JSON or XML responses. That said, due to its simplicity and ease of use with JavaScript, JSON has become the standard for modern APIs. 
+
+Different HTTP methods invoked on the same URL provide different functionality.
+
+| Operation  | Description                         | HTTP verb | URL                  | HTTP Response status code |
+| ---------- | ----------------------------------- | --------- | -------------------- | ------------------------- |
+| **C**reate | Create a new movie                  | POST      | /movies/             | 201                       |
+| **R**ead   | List all movies                     | GET       | /movies/             | 200                       |
+|            | Retrieve movie Blade runner         | GET       | /movies/blade-runner | 200                       |
+| **U**pdate | Update movie Blade runner           | PUT       | /movies/blade-runner | 200                       |
+|            | Partially update movie Blade runner | PATCH     | /movies/blade-runner | 200                       |
+|            | Batch update movies                 | PATCH     | /movies/             | 200                       |
+| **D**elete | Delete all movies                   | DELETE    | /movies/             | 204                       |
+|            | Delete movie Blade runner           | DELETE    | /movies/blade-runner | 204                       |
+
+## 2 minutes tutorial
+
+Here you can try most used CRUD operations and check HTTP responses. All RESTs method can be tested using curl utility.
+
+You can copy & paste curl command in you command shell to test API response. Whenever curl utility is not available on your os you can try API using live editing Javascript code.
+
+### How to create a resource
+
+**Create** operations are handled using HTTP Verb **POST**. The API endpoint must represent a collection of objects. Objects of the same collection must have the same type (in this particular scenario the object type is Movie).  Let's create a new movie resource and check server response. 
+
+
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TabItemCurl from '@theme/TabItemCurl';
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+  curl --insecure  -X POST  \
+    'https://${hostname}/api/rest/movies?identifier=${uuid}&title=Conan%20the%20barbarian&year=1982&duration=2h%209min&director=John%20Milius' \
+    -H 'Authorization: Bearer ${token}' \
+    -H 'Accept: text/json' \
+    -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RestClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+  
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/rest/movies/`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({
+        'identifier': http_client.newRequestUuid(), 
+        'title': 'Conan the barbarian', 
+        'year': '1982', 
+        'duration': 
+        '2h 9min', 
+        'director': 'John Milius'})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: false, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });       
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>)       
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### How to read resources
+
+**Read** operations are handled using HTTP Verb **GET**. The API endpoint must represent a collection of objects. Objects of the same collection must have the same type (in this particular scenario the object type is Movie).  All objects must have a unique identifier, moreover this **identifier should be specified in the endpoint**. Let's read a movie from the movie collection. 
+
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+  curl  --insecure -X GET  \
+    'https://${hostname}/api/rest/movies/blade-runner' \
+    -H 'Authorization: Bearer ${token}' \
+    -H 'Accept: text/json' \
+    -H 'Content-Type: application/json; charset=utf-8'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RestClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }  
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true}));     
+    fetch(`/api/rest/movies/blade-runner`, {
+      method: "GET",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      }
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="get">
+        <div className="header">Waiting for response</div>
+        <div className="body">
+          <div className="loader">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    )    
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="get">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">
+          {this.state.response}
+        </div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+
+### How to update resources
+
+**Update** operations are handled using HTTP Verb **PUT**. The API endpoint must represent a collection of objects. Objects of the same collection must have the same type (in this particular scenario the object type is Movie).  All objects must have a unique identifier, moreover this **identifier should be specified in the endpoint**. Let's update a movie in the movie collection. 
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+  curl  --insecure -X PUT  \
+    'https://${hostname}/api/rest/movies/blade-runner?identifier=blade-runner&title=Blade%20Runner&year=1985&duration=1h%2059min&director=Ridley%20Scott' \
+    -H 'Authorization: Bearer ${token}' \
+    -H 'Accept: text/json' \
+    -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RestClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }   
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true}));    
+    fetch(`/api/rest/movies/blade-runner`, {
+      method: "PUT",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({
+      'identifier': 'blade-runner', 
+      'title': 'Blade Runner', 
+      'year': '1985', // Updated
+      'duration': '1h 59min', 
+      'director': 'Ridley Scott'})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: false, 
+        statusText: resp.statusText,
+        status: resp.status}));  
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="put">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>)
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="put">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+
+### How to delete resources
+
+**Delete** operations are handled using HTTP Verb **DELETE**. The API endpoint must represent a collection of objects.  All objects must have a unique identifier, moreover this **identifier should be specified in the endpoint**.  Let's delete a movie in the movie collection. 
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+  curl  --insecure -X DELETE  \
+    'https://${hostname}/api/rest/movies/blade-runner' \
+    -H 'Authorization: Bearer ${token}' \
+    -H 'Accept: text/json' \
+    -H 'Content-Type: application/json'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RestClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }     
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true}));  
+    fetch(`/api/rest/movies/blade-runner`, {
+      method: "DELETE",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      }
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: false, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="delete">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>) 
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="delete">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>

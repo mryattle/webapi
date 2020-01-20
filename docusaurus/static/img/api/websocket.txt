@@ -1,0 +1,11 @@
+sequenceDiagram
+    Blade Runner Chat-xWebSocket server: Hello
+    activate WebSocket server
+    WebSocket server-xDialogflow service: Hello
+    deactivate WebSocket server
+    activate Dialogflow service
+    Dialogflow service-->>WebSocket server: Hello! How can I help you?
+    deactivate Dialogflow service
+    activate WebSocket server
+    WebSocket server-xBlade Runner Chat: Hello
+    deactivate WebSocket server

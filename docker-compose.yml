@@ -1,0 +1,125 @@
+version: '3.4'
+
+services:
+  docusaurus:
+    build:
+      context: ./docusaurus
+      dockerfile: Dockerfile
+    container_name: webapi-docusaurus
+    volumes:
+     - ./docusaurus/docusaurus.config.js:/app/docusaurus.config.js
+     - ./docusaurus/sidebars.js:/app/sidebars.js
+     - ./docusaurus/src/theme:/app/src/theme
+     - ./docusaurus/src/pages/index.js:/app/src/pages/index.js
+     - ./docusaurus/static/img/responsive.png:/app/static/img/responsive.png
+     - ./docusaurus/static/img/api.svg:/app/static/img/logo.svg
+     - ./docusaurus/static/img/source-code.svg:/app/static/img/source-code.svg
+     - ./docusaurus/static/img/shield.svg:/app/static/img/shield.svg
+     - ./docusaurus/static/img/learn.svg:/app/static/img/learn.svg
+     - ./docusaurus/static/img/favicon.ico:/app/static/img/favicon.ico
+     - ./docusaurus/static/img/api:/app/static/img/api
+     - ./docusaurus/static/js:/app/static/js
+     - ./docusaurus/src/css/custom.css:/app/src/css/custom.css
+     - ./docusaurus/docs:/app/docs
+     - ./docusaurus/build:/app/build
+    command: supervisor -e js,md,mdx,ejs,css -- /app/node_modules/@docusaurus/core/bin/docusaurus.js start --port=3000 --host=0.0.0.0  
+    networks:
+      webapi:
+  nginx:    
+    image: mryattle/nginx:1.0.0  
+    container_name: webapi-nginx     
+    volumes:
+      - ./nginx/htdocs:/var/www/localhost/htdocs
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf 
+      - ./nginx/nginx.pem:/etc/ssl/certs/nginx.pem
+      - ./nginx/nginx.key:/etc/ssl/private/nginx.key
+    ports:
+      - 443:443      
+    links:
+      - docusaurus 
+      - laravel   
+      - express         
+    networks:
+      webapi:
+  laravel:  
+    container_name: webapi-laravel
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile    
+    volumes:
+      # - ./laravel/.env:/opt/laravel/public_html/.env
+      - ./laravel/.dev.env:/opt/laravel/public_html/.env
+      - ./laravel/config/jwt.php:/opt/laravel/public_html/config/jwt.php
+      - ./laravel/app/Http/Kernel.php:/opt/laravel/public_html/app/Http/Kernel.php
+      - ./laravel/app/Exceptions/Handler.php:/opt/laravel/public_html/app/Exceptions/Handler.php
+      - ./laravel/app/User.php:/opt/laravel/public_html/app/User.php
+      - ./laravel/config/auth.php:/opt/laravel/public_html/config/auth.php
+      - ./laravel/config/app.php:/opt/laravel/public_html/config/app.php
+      - ./laravel/routes/web.php:/opt/laravel/public_html/routes/web.php
+      - ./laravel/routes/api.php:/opt/laravel/public_html/routes/api.php
+      - ./laravel/database/seeds:/opt/laravel/public_html/database/seeds
+      - ./laravel/database/migrations/2019_11_22_171653_create_movie_module.php:/opt/laravel/public_html/database/migrations/2019_11_22_171653_create_movie_module.php
+      - ./laravel/database/migrations/2019_11_27_093000_rpc_actions.php:/opt/laravel/public_html/database/migrations/2019_11_27_093000_rpc_actions.php
+      - ./laravel/app/Transformers:/opt/laravel/public_html/app/Transformers
+      - ./laravel/app/Models:/opt/laravel/public_html/app/Models
+      - ./laravel/app/Helpers:/opt/laravel/public_html/app/Helpers
+      - ./laravel/app/Http/Controllers/Controllers:/opt/laravel/public_html/app/Http/Controllers/Controllers
+      - ./laravel/app/Http/Middleware/LogRequests.php:/opt/laravel/public_html/app/Http/Middleware/LogRequests.php
+      - ./laravel/app/Http/Middleware/ForceJsonResponse.php:/opt/laravel/public_html/app/Http/Middleware/ForceJsonResponse.php
+      - ./laravel/config/filesystems.php:/opt/laravel/public_html/config/filesystems.php
+      - ./laravel/storage/app:/opt/laravel/public_html/storage/app
+      - ./laravel/public/.user.ini:/opt/laravel/public_html/public/.user.ini
+      - ./laravel/config/logging.php:/opt/laravel/public_html/config/logging.php
+      # GraphQL
+      - ./laravel/graphql:/opt/laravel/public_html/graphql
+      - ./laravel/config/lighthouse.php:/opt/laravel/public_html/config/lighthouse.php
+      - ./laravel/app/GraphQL:/opt/laravel/public_html/app/GraphQL
+      - ./laravel/database/migrations/2019_11_29_170000_graphql_optimizations.php:/opt/laravel/public_html/database/migrations/2019_11_29_170000_graphql_optimizations.php
+    depends_on:
+      - rdbms
+    links:
+      - rdbms    
+    ports:
+      - 9000:9000                   
+    networks:
+      webapi: 
+  express:
+    build:
+      context: ./express
+      dockerfile: Dockerfile
+    container_name: webapi-express  
+    command: "supervisor server.js"
+    volumes:
+      - ./express/app/google-key.json:/app/google-key.json
+      - ./express/app/index.html:/app/index.html
+      - ./express/app/config.js:/app/config.js 
+      - ./express/app/server.js:/app/server.js 
+      - ./express/app/services:/app/services
+      - ./express/app/assets:/app/assets     
+    ports:
+      - 8080:8080       
+    networks:
+      webapi:
+  rdbms:
+    image: postgres:11.2-alpine
+    container_name: webapi-postgres
+    environment:
+      POSTGRES_PASSWORD: webapi 
+      POSTGRES_USER: webapi
+      POSTGRES_DB: webapi
+    volumes:
+      - volume-rdbms:/var/lib/postgresql/data
+    networks:
+      webapi:
+        
+volumes:
+  volume-rdbms: 
+
+networks:
+  webapi:
+    ipam:
+      driver: default
+      config:
+      # (32-28)^2 = 16 possible hosts 
+      # for this SWARM 
+      - subnet: 240.0.4.0/28

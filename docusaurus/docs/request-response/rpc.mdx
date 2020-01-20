@@ -1,0 +1,447 @@
+---
+id: rpc
+title: Remote Procedure Call
+---
+
+Remote Procedure Call (RPC) is one of the simplest API paradigms, in which a client executes a block of code on another server. 
+
+Whereas REST is about resources, RPC is about actions. 
+
+Clients typically pass a method name and arguments to a server and receive back JSON or XML. RPC APIs generally follow two simple rules:
+
+- The endpoints contain the name of the operation to be executed.
+- API calls are made with the HTTP verb that is most appropriate: GET for read-only requests and POST for others. 
+
+RPC style works great for APIs that expose a variety of actions that might have more nuances and complications than can be encapsulated with CRUD or for which there are side effects unrelated to the "resource" at hand. RPC-style APIs also accommodate complicated resource models or actions upon multiple types of resources. 
+
+With RPC API you can design and implement several actions that are not handled by CRUD operations. 
+
+REST is not *only* CRUD, but things are done through mainly CRUD-based operations. REST will use HTTP methods such as `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS` and, hopefully, `PATCH` to provide semantic meaning for the intention of the action being taken.
+
+RPC, however, would not do that. Most use only `GET` and `POST`, with `GET` being used to fetch information and `POST` being used for everything else. It is common to see RPC APIs using something like `POST /movies.delete`, with a body of `{ “identifier”: "blade-runner" }`, instead of the REST approach, which would be `DELETE /movies/blade-runner`.
+
+The biggest difference between REST and RPC is in how actions are handled. In RPC, you just have `POST /doWhateverThingNow`, and that’s rather clear. But with REST, using these CRUD-like  operations can make you feel like REST is no good at handling anything  other than CRUD.
+
+Triggering actions can be done with either approach; but, in REST, that  trigger can be thought of more like an aftereffect. For example, if you  want to “Like” a movie, RPC would be this:
+
+```http
+POST /movies.like HTTP/1.1
+Content-Type: application/json
+
+{"identifier": "blade-runner"}
+```
+
+But in REST, the same action would be this:
+
+```http
+POST /movies/blade-runner/likes HTTP/1.1
+Content-Type: application/json
+
+{"increment": "1"}
+```
+
+There’s quite a conceptual difference here, even if they look rather similar:
+
+ - **RPC**. We are sending a like, and that might end up storing something in the database to keep a history, which might be another RPC call with possibly the same field names who knows?
+ - **REST**. We are creating a likes resource in the movies’s collection. We can see a history of these easily by doing a GET on the same URL, and the message will be sent in the background.
+
+Different endpoints provide different functionality.
+
+| Operation | Description                                 | HTTP verb | Endpoint        | HTTP Response status code |
+| --------- | ------------------------------------------- | --------- | --------------- | ------------------------- |
+| Like      | Like a movie                                | POST      | /movie.like     | 200                       |
+| Rank      | Ranking a movie with a score from 0 to 10   | POST      | /movie.rank     | 200                       |
+| Top 10    | List top 10 movies                          | GET       | /movie.top10    | 200                       |
+| Add actor | Add a new actor that performed on the movie | GET       | /movie.addActor | 201                       |
+
+Using RPC a computer program causes a procedure to execute in a different address space (commonly on another computer on a shared network). Using RPC the actions are coded as if it were a normal (local) procedure call, without the programmer  explicitly coding the details for the remote interaction.
+
+![RPC client server interaction](/img/api/RPC.PNG)
+
+Here is an example of what a RPC client source will look like when using a Javascript library like JSON RPC
+
+```javascript
+var rpc;
+try {
+   rpc = new JRpc("/");
+}
+catch(e) {
+   alert("Cannot connect to RPC service");
+}
+try {
+   if (rpc.movie.rank("blade-runner", 10)) {
+     alert(movie.title + ' has benn voted');
+   }
+}
+catch(e) {
+   alert("Call failed: " + e.toString());
+}
+```
+
+RPC-style APIs are not exclusive to HTTP. There are other high-performance protocols that are available for RPC-style APIs.
+
+A modern RPC implementation is gRPC, it uses a data format called ProtoBuff, which requires a schema as well as the data instance, much like the WSDL in SOAP.  gRPC focuses on making single interactions as quick as possible, thanks to HTTP/2, and the fact that ProtoBuff packs down smaller than JSON, but JSON can also be used easily enough.
+
+Using RPC implementation like gRPC, XML-RPC to JSON-RPC the developer need to layer metadata on top in order to describe things such as which fields correspond to which data types. This can be really usefull to document your RPC API.
+
+## 2 minutes tutorial
+
+Here you can try some RPC actions and check HTTP responses. All RPC actions can be tested using curl utility.
+
+You can copy & paste curl command in you command shell to test API response. Whenever curl utility is not available on your os you can try API using live editing Javascript code.
+
+### How to like a movie
+
+**Like** action is handled using HTTP Verb **POST**. The API endpoint must represent the action method itself. Naming conventions for the endpoint must be chosen before to start the implementation. In our scenario we will create a **movie.like** action to like a movie.  Let's use the movie.like action and check server response. 
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import TabItemCurl from '@theme/TabItemCurl';
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl  --insecure -X POST \
+  'https://${hostname}/api/rpc/movie.like?identifier=blade-runner' \
+  -H 'Authorization: Bearer ${token}' \
+  -H 'Accept: text/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RpcClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }  
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/rpc/movie.like`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({
+      'identifier': 'blade-runner'})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>)  
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+
+### How to rank a movie
+
+**Rank** action is handled using HTTP Verb **POST**. The API endpoint must represent the action method itself. Naming conventions for the endpoint must be chosen before to start the implementation. In our scenario we will create a **movie.rank** action to rank a movie.  Let's use the movie.rank action and check server response. 
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl --insecure  -X POST \
+  'https://${hostname}/api/rpc/movie.rank?identifier=blade-runner&rank=10' \
+  -H 'Authorization: Bearer ${token}' \
+  -H 'Accept: text/json' \
+  -H 'Content-Type: application/x-www-form-urlencoded'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RpcClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+  
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true})); 
+    fetch(`/api/rpc/movie.like`, {
+      method: "POST",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      },
+      body: JSON.stringify({
+      'identifier': 'blade-runner',
+      'rank': '10'})
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status}));  
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="post">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>) 
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="post">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>
+
+### How to list top 10 movies
+
+**List top 10 movie** action is handled using HTTP Verb **GET**. The API endpoint must represent the action method itself. Naming conventions for the endpoint must be chosen before to start the implementation. In our scenario we will create a **movie.top10** action to obtain a list for those 10 movies that has been ranked with highest scores.  Let's use the movie.top10 action and check server response.
+
+<Tabs
+  defaultValue="bash"
+  values={[
+    { label: 'Bash', value: 'bash', },
+    { label: 'React', value: 'jsx live', },
+  ]
+}>
+<TabItemCurl value="bash">
+
+```bash
+curl  --insecure -X GET \
+  'https://${hostname}/api/rpc/movie.top10' \
+  -H 'Authorization: Bearer ${token}' \
+  -H 'Accept: text/json' \
+  -H 'Content-Type: application/json'
+```
+
+</TabItemCurl>
+<TabItem value="jsx live">
+
+```jsx live
+class RpcClient extends React.Component {
+  constructor() {
+    super()
+    this.state =  { response: null, 
+      status: null, statusText: null,
+      token: null,
+      loading: false }
+    this.http_client_subscribe = null;
+  }
+  
+  componentDidMount() {
+    // JWT Token
+    var component = this;
+    this.http_client_subscribe =  http_client.token.subscribe(
+      function (value) {   
+        component.setState(state => ({ token: value }));      
+      },
+      function (error) {
+        component.setState(state => ({ response: error.message }));
+      },
+      function () {
+        console.log('Completed');
+      }); 
+  }
+
+  componentWillUnmount() {
+    if(this.http_client_subscribe === null)
+      return;
+    this.http_client_subscribe.dispose();
+  }
+  
+  handleClick() {
+    this.setState(state => ({ 
+      loading: true}));    
+    fetch(`/api/rpc/movie.top10`, {
+      method: "GET",
+      dataType: "JSON",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization": `Bearer ${this.state.token}`,
+      }
+    })
+    .then((resp) => {
+      this.setState(state => ({
+        loading: null, 
+        statusText: resp.statusText,
+        status: resp.status})); 
+      return resp.json();
+    }) 
+    .then((data) => {
+      this.setState(state => ({ response: JSON.stringify(data, null,'\t') }));                   
+    })
+    .catch((error) => {
+      this.setState(state => ({ response: error.message }));
+    });
+  }
+
+  render() {
+    if(!this.state.status && this.state.loading === false)
+      return (<div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      </div>)
+    if(this.state.loading)
+      return (
+      <div>
+        <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+        <div id="response" className="get">
+          <div className="header">Waiting for response</div>
+          <div className="body">
+            <div className="loader">Loading...</div>
+          </div>
+        </div>
+      </div>) 
+    return (
+    <div>
+      <div><button onClick={() => this.handleClick()}>Try this API</button> <span>and check HTTP server response</span></div>
+      <div id="response" className="get">
+        <div className="header">{this.state.status} {this.state.statusText}</div>
+        <div className="body">{this.state.response}</div>
+      </div>
+    </div>
+
+    )
+  }
+}
+```
+
+</TabItem>
+</Tabs>

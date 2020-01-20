@@ -1,0 +1,156 @@
+ /**
+ * Copyright (c) 2017-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --loader-background: white;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgb(72, 77, 91);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+#response {
+    border: 1px solid var(--ifm-pagination-nav-color-hover);
+    margin-top: 10px;
+    border-radius: var(--ifm-pagination-nav-border-radius);
+}
+
+#response .header {
+    background-color: var(--ifm-pagination-nav-color-hover);
+    color: var(--ifm-navbar-link-color);
+    padding: 10px;
+}
+
+#response .body {
+    padding: 10px;
+}
+
+#response.post { border: 1px solid  green; }
+#response.get { border: 1px solid  rgb(33, 102, 252); }
+#response.put { border: 1px solid  rgb(196, 95, 0); }
+#response.delete { border: 1px solid  rgb(163, 5, 0); }
+
+
+#response.post .header { background-color: green; color: white; }
+#response.get .header { background-color: rgb(33, 102, 252); color: white; }
+#response.put .header { background-color: rgb(196, 95, 0); color: white; }
+#response.delete .header { background-color: rgb(163, 5, 0); color: white; }
+
+/* Loader */
+html[data-theme='dark'] {
+  --loader-background: var(--ifm-background-color);
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+}
+.loader {
+  color: var(--ifm-color-primary);
+  font-size: 9px;
+  text-indent: -99999em;
+  margin: 55px auto;
+  position: relative;
+  width: 10em;
+  height: 10em;
+  box-shadow: inset 0 0 0 1em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  content: '';
+}
+.loader:before {
+  width: 5.2em;
+  height: 10.2em;
+  background: var(--loader-background);
+  border-radius: 10.2em 0 0 10.2em;
+  top: -0.1em;
+  left: -0.1em;
+  -webkit-transform-origin: 5.1em 5.1em;
+  transform-origin: 5.1em 5.1em;
+  -webkit-animation: load2 2s infinite ease 1.5s;
+  animation: load2 2s infinite ease 1.5s;
+}
+.loader:after {
+  width: 5.2em;
+  height: 10.2em;
+  background: var(--loader-background);
+  border-radius: 0 10.2em 10.2em 0;
+  top: -0.1em;
+  left: 4.9em;
+  -webkit-transform-origin: 0.1em 5.1em;
+  transform-origin: 0.1em 5.1em;
+  -webkit-animation: load2 2s infinite ease;
+  animation: load2 2s infinite ease;
+}
+@-webkit-keyframes load2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load2 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* FIX: prism codeline too long */
+.token-line { max-width: 37vw; }
+
+@media only screen and (max-width: 996px) {
+  .token-line { max-width: inherit; }
+}
+
+/* FIX: night and day not useful */
+.homepage-section { display: flex; align-items: center; padding: 2rem 0; width: 100%; }
+.homepage-section img { height: 134px; width: 200px; padding-top:32px; padding-bottom:32px; }
+
+/* New chat */
+.message-chat { box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); border-radius: 8px; }
+.message-chat .header {  color: white; border-radius:  8px 8px 0px 0px; background-color: var(--ifm-color-primary); padding: 10px 0 15px; }
+.message-chat .header .title { font-size: 1.5em; }
+.message-chat .header .subtitle { font-weight: lighter;  }
+.message-chat .header div { text-align: center; }
+/* .message-list { max-width: 53vw; } */
+.message-list .me { background-color: #f4f7f9; border-radius: 16px 0px 16px 16px; }
+.message-list .bot { background-color: var(--ifm-color-primary); border-radius: 0px 16px 16px 16px;  } 
+
+@media only screen and (max-width: 996px) {
+  .message-list { max-width: 100vw; }
+}

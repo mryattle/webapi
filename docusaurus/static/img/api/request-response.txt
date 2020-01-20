@@ -1,0 +1,13 @@
+sequenceDiagram
+    activate Client
+    Client->>Server: send first request
+    activate Server
+    Server->>Server: elaborate first
+    Server-->>Client: send first response
+    deactivate Server
+    Client->>Server: send second request
+    activate Server
+    Server->>Server: elaborate second
+    Server-->>Client: send second response
+    deactivate Server
+    deactivate Client

@@ -1,0 +1,17 @@
+sequenceDiagram
+    User->>Browser: I want to use a secure endpoint
+    Browser->>Secured resource: Let me see a secure endpoint
+    Secured resource-->>Browser: Sure! i would love to, who are you exactly ? 
+    Browser-->>User: Who are you ?
+    User->>Browser: I'm email: fan@movies.com pass: 12345
+    Browser->>Secured resource: fan@movies.com is saying he wants to use a secure endpoint
+    Secured resource->>Identity manager: Let me see if it's really him
+    alt Authenticated + Authorized
+        Identity manager-->>Secured resource: Yes he's fan@movies.com
+        Secured resource-->>Browser: Ok fan@movies.com here is you resource
+        Browser-->>User: Here's what you wanted
+    else Not authenticated
+        Identity manager-->>Secured resource: I don't think it's him
+        Secured resource-->>Browser: He's not  fan@movies.com
+        Browser-->>User: I don't think you are fan@movies.com
+    end
