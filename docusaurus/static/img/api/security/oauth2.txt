@@ -14,11 +14,11 @@ sequenceDiagram
    A&A manager-->>Browser: sure fan@movies.com this is your  [authorization token]
    Browser->>UI: I have this [authorization token] to let fan@movies.com use a protected resource
    UI->>Secured resource: I have this [authorization token] to let fan@movies.com use a protected resource
-    alt Autenticated and authorized
+    alt Authenticated
         Secured resource-->>UI: Ok fan@movies.com can use this resource
         UI-->>Browser: user is authorized to use this resource
         Browser-->>User: Here you are your requested endpoint 
-    else Autenticated but not authorized
-        Secured resource-->>UI: I'm sorry fan@movies.com can't use this resource
-        UI-->>Browser: user is not authorized to use this endpoint
+    else Not authenticated
+        Secured resource-->>UI: I don't think he is fan@movies.com
+        UI-->>Browser: this user is not authorized to use this endpoint
     end

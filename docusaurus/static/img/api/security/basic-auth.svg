@@ -1,49 +1,50 @@
-<svg id="mermaid-1578384703004" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:850px;" viewBox="-50 -10 850 671"><style>
+<svg id="mermaid-1580979497857" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:1050px;" viewBox="-50 -10 1050 866"><style>
 
 
 
-#mermaid-1578384703004 .label {
+#mermaid-1580979497857 .label {
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family);
   color: #333; }
 
-#mermaid-1578384703004 .label text {
+#mermaid-1580979497857 .label text {
   fill: #333; }
 
-#mermaid-1578384703004 .node rect,
-#mermaid-1578384703004 .node circle,
-#mermaid-1578384703004 .node ellipse,
-#mermaid-1578384703004 .node polygon {
+#mermaid-1580979497857 .node rect,
+#mermaid-1580979497857 .node circle,
+#mermaid-1580979497857 .node ellipse,
+#mermaid-1580979497857 .node polygon,
+#mermaid-1580979497857 .node path {
   fill: #ECECFF;
   stroke: #9370DB;
   stroke-width: 1px; }
 
-#mermaid-1578384703004 .node .label {
+#mermaid-1580979497857 .node .label {
   text-align: center; }
 
-#mermaid-1578384703004 .node.clickable {
+#mermaid-1580979497857 .node.clickable {
   cursor: pointer; }
 
-#mermaid-1578384703004 .arrowheadPath {
+#mermaid-1580979497857 .arrowheadPath {
   fill: #333333; }
 
-#mermaid-1578384703004 .edgePath .path {
+#mermaid-1580979497857 .edgePath .path {
   stroke: #333333;
   stroke-width: 1.5px; }
 
-#mermaid-1578384703004 .edgeLabel {
+#mermaid-1580979497857 .edgeLabel {
   background-color: #e8e8e8;
   text-align: center; }
 
-#mermaid-1578384703004 .cluster rect {
+#mermaid-1580979497857 .cluster rect {
   fill: #ffffde;
   stroke: #aaaa33;
   stroke-width: 1px; }
 
-#mermaid-1578384703004 .cluster text {
+#mermaid-1580979497857 .cluster text {
   fill: #333; }
 
-#mermaid-1578384703004 div.mermaidTooltip {
+#mermaid-1580979497857 div.mermaidTooltip {
   position: absolute;
   text-align: center;
   max-width: 200px;
@@ -57,117 +58,117 @@
   pointer-events: none;
   z-index: 100; }
 
-#mermaid-1578384703004 .actor {
+#mermaid-1580979497857 .actor {
   stroke: #CCCCFF;
   fill: #ECECFF; }
 
-#mermaid-1578384703004 text.actor {
+#mermaid-1580979497857 text.actor {
   fill: black;
   stroke: none; }
 
-#mermaid-1578384703004 .actor-line {
+#mermaid-1580979497857 .actor-line {
   stroke: grey; }
 
-#mermaid-1578384703004 .messageLine0 {
+#mermaid-1580979497857 .messageLine0 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   stroke: #333; }
 
-#mermaid-1578384703004 .messageLine1 {
+#mermaid-1580979497857 .messageLine1 {
   stroke-width: 1.5;
   stroke-dasharray: '2 2';
   stroke: #333; }
 
-#mermaid-1578384703004 #arrowhead {
+#mermaid-1580979497857 #arrowhead {
   fill: #333; }
 
-#mermaid-1578384703004 .sequenceNumber {
+#mermaid-1580979497857 .sequenceNumber {
   fill: white; }
 
-#mermaid-1578384703004 #sequencenumber {
+#mermaid-1580979497857 #sequencenumber {
   fill: #333; }
 
-#mermaid-1578384703004 #crosshead path {
+#mermaid-1580979497857 #crosshead path {
   fill: #333 !important;
   stroke: #333 !important; }
 
-#mermaid-1578384703004 .messageText {
+#mermaid-1580979497857 .messageText {
   fill: #333;
   stroke: none; }
 
-#mermaid-1578384703004 .labelBox {
+#mermaid-1580979497857 .labelBox {
   stroke: #CCCCFF;
   fill: #ECECFF; }
 
-#mermaid-1578384703004 .labelText {
+#mermaid-1580979497857 .labelText {
   fill: black;
   stroke: none; }
 
-#mermaid-1578384703004 .loopText {
+#mermaid-1580979497857 .loopText {
   fill: black;
   stroke: none; }
 
-#mermaid-1578384703004 .loopLine {
+#mermaid-1580979497857 .loopLine {
   stroke-width: 2;
   stroke-dasharray: '2 2';
   stroke: #CCCCFF; }
 
-#mermaid-1578384703004 .note {
+#mermaid-1580979497857 .note {
   stroke: #aaaa33;
   fill: #fff5ad; }
 
-#mermaid-1578384703004 .noteText {
+#mermaid-1580979497857 .noteText {
   fill: black;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family);
   font-size: 14px; }
 
-#mermaid-1578384703004 .activation0 {
+#mermaid-1580979497857 .activation0 {
   fill: #f4f4f4;
   stroke: #666; }
 
-#mermaid-1578384703004 .activation1 {
+#mermaid-1580979497857 .activation1 {
   fill: #f4f4f4;
   stroke: #666; }
 
-#mermaid-1578384703004 .activation2 {
+#mermaid-1580979497857 .activation2 {
   fill: #f4f4f4;
   stroke: #666; }
 
 
-#mermaid-1578384703004 .mermaid-main-font {
+#mermaid-1580979497857 .mermaid-main-font {
   font-family: "trebuchet ms", verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 .section {
+#mermaid-1580979497857 .section {
   stroke: none;
   opacity: 0.2; }
 
-#mermaid-1578384703004 .section0 {
+#mermaid-1580979497857 .section0 {
   fill: rgba(102, 102, 255, 0.49); }
 
-#mermaid-1578384703004 .section2 {
+#mermaid-1580979497857 .section2 {
   fill: #fff400; }
 
-#mermaid-1578384703004 .section1,
-#mermaid-1578384703004 .section3 {
+#mermaid-1580979497857 .section1,
+#mermaid-1580979497857 .section3 {
   fill: white;
   opacity: 0.2; }
 
-#mermaid-1578384703004 .sectionTitle0 {
+#mermaid-1580979497857 .sectionTitle0 {
   fill: #333; }
 
-#mermaid-1578384703004 .sectionTitle1 {
+#mermaid-1580979497857 .sectionTitle1 {
   fill: #333; }
 
-#mermaid-1578384703004 .sectionTitle2 {
+#mermaid-1580979497857 .sectionTitle2 {
   fill: #333; }
 
-#mermaid-1578384703004 .sectionTitle3 {
+#mermaid-1580979497857 .sectionTitle3 {
   fill: #333; }
 
-#mermaid-1578384703004 .sectionTitle {
+#mermaid-1580979497857 .sectionTitle {
   text-anchor: start;
   font-size: 11px;
   text-height: 14px;
@@ -175,309 +176,319 @@
   font-family: var(--mermaid-font-family); }
 
 
-#mermaid-1578384703004 .grid .tick {
+#mermaid-1580979497857 .grid .tick {
   stroke: lightgrey;
-  opacity: 0.3;
+  opacity: 0.8;
   shape-rendering: crispEdges; }
-#mermaid-1578384703004   .grid .tick text {
+#mermaid-1580979497857   .grid .tick text {
     font-family: 'trebuchet ms', verdana, arial;
     font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 .grid path {
+#mermaid-1580979497857 .grid path {
   stroke-width: 0; }
 
 
-#mermaid-1578384703004 .today {
+#mermaid-1580979497857 .today {
   fill: none;
   stroke: red;
   stroke-width: 2px; }
 
 
 
-#mermaid-1578384703004 .task {
+#mermaid-1580979497857 .task {
   stroke-width: 2; }
 
-#mermaid-1578384703004 .taskText {
+#mermaid-1580979497857 .taskText {
   text-anchor: middle;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 .taskText:not([font-size]) {
+#mermaid-1580979497857 .taskText:not([font-size]) {
   font-size: 11px; }
 
-#mermaid-1578384703004 .taskTextOutsideRight {
+#mermaid-1580979497857 .taskTextOutsideRight {
   fill: black;
   text-anchor: start;
   font-size: 11px;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 .taskTextOutsideLeft {
+#mermaid-1580979497857 .taskTextOutsideLeft {
   fill: black;
   text-anchor: end;
   font-size: 11px; }
 
 
-#mermaid-1578384703004 .task.clickable {
+#mermaid-1580979497857 .task.clickable {
   cursor: pointer; }
 
-#mermaid-1578384703004 .taskText.clickable {
+#mermaid-1580979497857 .taskText.clickable {
   cursor: pointer;
   fill: #003163 !important;
   font-weight: bold; }
 
-#mermaid-1578384703004 .taskTextOutsideLeft.clickable {
+#mermaid-1580979497857 .taskTextOutsideLeft.clickable {
   cursor: pointer;
   fill: #003163 !important;
   font-weight: bold; }
 
-#mermaid-1578384703004 .taskTextOutsideRight.clickable {
+#mermaid-1580979497857 .taskTextOutsideRight.clickable {
   cursor: pointer;
   fill: #003163 !important;
   font-weight: bold; }
 
 
-#mermaid-1578384703004 .taskText0,
-#mermaid-1578384703004 .taskText1,
-#mermaid-1578384703004 .taskText2,
-#mermaid-1578384703004 .taskText3 {
+#mermaid-1580979497857 .taskText0,
+#mermaid-1580979497857 .taskText1,
+#mermaid-1580979497857 .taskText2,
+#mermaid-1580979497857 .taskText3 {
   fill: white; }
 
-#mermaid-1578384703004 .task0,
-#mermaid-1578384703004 .task1,
-#mermaid-1578384703004 .task2,
-#mermaid-1578384703004 .task3 {
+#mermaid-1580979497857 .task0,
+#mermaid-1580979497857 .task1,
+#mermaid-1580979497857 .task2,
+#mermaid-1580979497857 .task3 {
   fill: #8a90dd;
   stroke: #534fbc; }
 
-#mermaid-1578384703004 .taskTextOutside0,
-#mermaid-1578384703004 .taskTextOutside2 {
+#mermaid-1580979497857 .taskTextOutside0,
+#mermaid-1580979497857 .taskTextOutside2 {
   fill: black; }
 
-#mermaid-1578384703004 .taskTextOutside1,
-#mermaid-1578384703004 .taskTextOutside3 {
+#mermaid-1580979497857 .taskTextOutside1,
+#mermaid-1580979497857 .taskTextOutside3 {
   fill: black; }
 
 
-#mermaid-1578384703004 .active0,
-#mermaid-1578384703004 .active1,
-#mermaid-1578384703004 .active2,
-#mermaid-1578384703004 .active3 {
+#mermaid-1580979497857 .active0,
+#mermaid-1580979497857 .active1,
+#mermaid-1580979497857 .active2,
+#mermaid-1580979497857 .active3 {
   fill: #bfc7ff;
   stroke: #534fbc; }
 
-#mermaid-1578384703004 .activeText0,
-#mermaid-1578384703004 .activeText1,
-#mermaid-1578384703004 .activeText2,
-#mermaid-1578384703004 .activeText3 {
+#mermaid-1580979497857 .activeText0,
+#mermaid-1580979497857 .activeText1,
+#mermaid-1580979497857 .activeText2,
+#mermaid-1580979497857 .activeText3 {
   fill: black !important; }
 
 
-#mermaid-1578384703004 .done0,
-#mermaid-1578384703004 .done1,
-#mermaid-1578384703004 .done2,
-#mermaid-1578384703004 .done3 {
+#mermaid-1580979497857 .done0,
+#mermaid-1580979497857 .done1,
+#mermaid-1580979497857 .done2,
+#mermaid-1580979497857 .done3 {
   stroke: grey;
   fill: lightgrey;
   stroke-width: 2; }
 
-#mermaid-1578384703004 .doneText0,
-#mermaid-1578384703004 .doneText1,
-#mermaid-1578384703004 .doneText2,
-#mermaid-1578384703004 .doneText3 {
+#mermaid-1580979497857 .doneText0,
+#mermaid-1580979497857 .doneText1,
+#mermaid-1580979497857 .doneText2,
+#mermaid-1580979497857 .doneText3 {
   fill: black !important; }
 
 
-#mermaid-1578384703004 .crit0,
-#mermaid-1578384703004 .crit1,
-#mermaid-1578384703004 .crit2,
-#mermaid-1578384703004 .crit3 {
+#mermaid-1580979497857 .crit0,
+#mermaid-1580979497857 .crit1,
+#mermaid-1580979497857 .crit2,
+#mermaid-1580979497857 .crit3 {
   stroke: #ff8888;
   fill: red;
   stroke-width: 2; }
 
-#mermaid-1578384703004 .activeCrit0,
-#mermaid-1578384703004 .activeCrit1,
-#mermaid-1578384703004 .activeCrit2,
-#mermaid-1578384703004 .activeCrit3 {
+#mermaid-1580979497857 .activeCrit0,
+#mermaid-1580979497857 .activeCrit1,
+#mermaid-1580979497857 .activeCrit2,
+#mermaid-1580979497857 .activeCrit3 {
   stroke: #ff8888;
   fill: #bfc7ff;
   stroke-width: 2; }
 
-#mermaid-1578384703004 .doneCrit0,
-#mermaid-1578384703004 .doneCrit1,
-#mermaid-1578384703004 .doneCrit2,
-#mermaid-1578384703004 .doneCrit3 {
+#mermaid-1580979497857 .doneCrit0,
+#mermaid-1580979497857 .doneCrit1,
+#mermaid-1580979497857 .doneCrit2,
+#mermaid-1580979497857 .doneCrit3 {
   stroke: #ff8888;
   fill: lightgrey;
   stroke-width: 2;
   cursor: pointer;
   shape-rendering: crispEdges; }
 
-#mermaid-1578384703004 .milestone {
+#mermaid-1580979497857 .milestone {
   transform: rotate(45deg) scale(0.8, 0.8); }
 
-#mermaid-1578384703004 .milestoneText {
+#mermaid-1580979497857 .milestoneText {
   font-style: italic; }
 
-#mermaid-1578384703004 .doneCritText0,
-#mermaid-1578384703004 .doneCritText1,
-#mermaid-1578384703004 .doneCritText2,
-#mermaid-1578384703004 .doneCritText3 {
+#mermaid-1580979497857 .doneCritText0,
+#mermaid-1580979497857 .doneCritText1,
+#mermaid-1580979497857 .doneCritText2,
+#mermaid-1580979497857 .doneCritText3 {
   fill: black !important; }
 
-#mermaid-1578384703004 .activeCritText0,
-#mermaid-1578384703004 .activeCritText1,
-#mermaid-1578384703004 .activeCritText2,
-#mermaid-1578384703004 .activeCritText3 {
+#mermaid-1580979497857 .activeCritText0,
+#mermaid-1580979497857 .activeCritText1,
+#mermaid-1580979497857 .activeCritText2,
+#mermaid-1580979497857 .activeCritText3 {
   fill: black !important; }
 
-#mermaid-1578384703004 .titleText {
+#mermaid-1580979497857 .titleText {
   text-anchor: middle;
   font-size: 18px;
   fill: black;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 g.classGroup text {
+#mermaid-1580979497857 g.classGroup text {
   fill: #9370DB;
   stroke: none;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family);
   font-size: 10px; }
-#mermaid-1578384703004   g.classGroup text .title {
+#mermaid-1580979497857   g.classGroup text .title {
     font-weight: bolder; }
 
-#mermaid-1578384703004 g.classGroup rect {
+#mermaid-1580979497857 g.clickable {
+  cursor: pointer; }
+
+#mermaid-1580979497857 g.classGroup rect {
   fill: #ECECFF;
   stroke: #9370DB; }
 
-#mermaid-1578384703004 g.classGroup line {
+#mermaid-1580979497857 g.classGroup line {
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 .classLabel .box {
+#mermaid-1580979497857 .classLabel .box {
   stroke: none;
   stroke-width: 0;
   fill: #ECECFF;
   opacity: 0.5; }
 
-#mermaid-1578384703004 .classLabel .label {
+#mermaid-1580979497857 .classLabel .label {
   fill: #9370DB;
   font-size: 10px; }
 
-#mermaid-1578384703004 .relation {
+#mermaid-1580979497857 .relation {
   stroke: #9370DB;
   stroke-width: 1;
   fill: none; }
 
-#mermaid-1578384703004 #compositionStart {
+#mermaid-1580979497857 .dashed-line {
+  stroke-dasharray: 3; }
+
+#mermaid-1580979497857 #compositionStart {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #compositionEnd {
+#mermaid-1580979497857 #compositionEnd {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #aggregationStart {
+#mermaid-1580979497857 #aggregationStart {
   fill: #ECECFF;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #aggregationEnd {
+#mermaid-1580979497857 #aggregationEnd {
   fill: #ECECFF;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #dependencyStart {
+#mermaid-1580979497857 #dependencyStart {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #dependencyEnd {
+#mermaid-1580979497857 #dependencyEnd {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #extensionStart {
+#mermaid-1580979497857 #extensionStart {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 #extensionEnd {
+#mermaid-1580979497857 #extensionEnd {
   fill: #9370DB;
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 .commit-id,
-#mermaid-1578384703004 .commit-msg,
-#mermaid-1578384703004 .branch-label {
+#mermaid-1580979497857 .commit-id,
+#mermaid-1580979497857 .commit-msg,
+#mermaid-1580979497857 .branch-label {
   fill: lightgrey;
   color: lightgrey;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 .pieTitleText {
+#mermaid-1580979497857 .pieTitleText {
   text-anchor: middle;
   font-size: 25px;
   fill: black;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 .slice {
+#mermaid-1580979497857 .slice {
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 g.stateGroup text {
+#mermaid-1580979497857 g.stateGroup text {
   fill: #9370DB;
   stroke: none;
   font-size: 10px;
   font-family: 'trebuchet ms', verdana, arial;
   font-family: var(--mermaid-font-family); }
 
-#mermaid-1578384703004 g.stateGroup text {
+#mermaid-1580979497857 g.stateGroup text {
   fill: #9370DB;
   stroke: none;
   font-size: 10px; }
 
-#mermaid-1578384703004 g.stateGroup .state-title {
+#mermaid-1580979497857 g.stateGroup .state-title {
   font-weight: bolder;
   fill: black; }
 
-#mermaid-1578384703004 g.stateGroup rect {
+#mermaid-1580979497857 g.stateGroup rect {
   fill: #ECECFF;
   stroke: #9370DB; }
 
-#mermaid-1578384703004 g.stateGroup line {
+#mermaid-1580979497857 g.stateGroup line {
   stroke: #9370DB;
   stroke-width: 1; }
 
-#mermaid-1578384703004 .transition {
+#mermaid-1580979497857 .transition {
   stroke: #9370DB;
   stroke-width: 1;
   fill: none; }
 
-#mermaid-1578384703004 .stateGroup .composit {
+#mermaid-1580979497857 .stateGroup .composit {
   fill: white;
   border-bottom: 1px; }
 
-#mermaid-1578384703004 .state-note {
+#mermaid-1580979497857 .stateGroup .alt-composit {
+  fill: #e0e0e0;
+  border-bottom: 1px; }
+
+#mermaid-1580979497857 .state-note {
   stroke: #aaaa33;
   fill: #fff5ad; }
-#mermaid-1578384703004   .state-note text {
+#mermaid-1580979497857   .state-note text {
     fill: black;
     stroke: none;
     font-size: 10px; }
 
-#mermaid-1578384703004 .stateLabel .box {
+#mermaid-1580979497857 .stateLabel .box {
   stroke: none;
   stroke-width: 0;
   fill: #ECECFF;
   opacity: 0.5; }
 
-#mermaid-1578384703004 .stateLabel text {
+#mermaid-1580979497857 .stateLabel text {
   fill: black;
   font-size: 10px;
   font-weight: bold;
@@ -488,7 +499,7 @@
   --mermaid-font-family: '"trebuchet ms", verdana, arial';
   --mermaid-font-family: "Comic Sans MS", "Comic Sans", cursive; }
 
-:root { --mermaid-font-family: "trebuchet ms", verdana, arial;}</style><style>#mermaid-1578384703004 {
-    color: rgba(0, 0, 0, 0.65);
+:root { --mermaid-font-family: "trebuchet ms", verdana, arial;}</style><style>#mermaid-1580979497857 {
+    color: rgb(0, 0, 0);
     font: ;
-  }</style><g></g><g><line id="actor0" x1="75" y1="5" x2="75" y2="660" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">User</tspan></text></g><g><line id="actor1" x1="275" y1="5" x2="275" y2="660" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Browser</tspan></text></g><g><line id="actor2" x1="475" y1="5" x2="475" y2="660" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="400" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">Secured resource</tspan></text></g><g><line id="actor3" x1="675" y1="5" x2="675" y2="660" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="600" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="675" dy="0">Identity manager</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" style="stroke-dasharray: 0px, 0px;" stroke-width="1px" d="M 9,2 V 6 L16,4 Z"></path><path fill="none" stroke="#000000" style="stroke-dasharray: 0px, 0px;" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7"></path></marker></defs><defs><marker id="sequencenumber" refX="15" refY="15" markerWidth="60" markerHeight="40" orient="auto"><circle cx="15" cy="15" r="6"></circle></marker></defs><g><text x="175" y="93" style="text-anchor: middle;" class="messageText">I want to use a secure endpoint</text><line x1="75" y1="100" x2="275" y2="100" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="128" style="text-anchor: middle;" class="messageText">Let me see a secure endpoint</text><line x1="275" y1="135" x2="475" y2="135" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="163" style="text-anchor: middle;" class="messageText">Sure! i would love to, who are you exactly ?</text><line x1="475" y1="170" x2="275" y2="170" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="198" style="text-anchor: middle;" class="messageText">Who are you ?</text><line x1="275" y1="205" x2="75" y2="205" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="233" style="text-anchor: middle;" class="messageText">I'm email: fan@movies.com pass: 12345</text><line x1="75" y1="240" x2="275" y2="240" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="268" style="text-anchor: middle;" class="messageText">fan@movies.com is saying he wants to use a secure endpoint</text><line x1="275" y1="275" x2="475" y2="275" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="575" y="303" style="text-anchor: middle;" class="messageText">Let me see if it's really him</text><line x1="475" y1="310" x2="675" y2="310" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="575" y="363" style="text-anchor: middle;" class="messageText">Yes he's fan@movies.com</text><line x1="675" y1="370" x2="475" y2="370" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="398" style="text-anchor: middle;" class="messageText">Ok fan@movies.com here is you resource</text><line x1="475" y1="405" x2="275" y2="405" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="433" style="text-anchor: middle;" class="messageText">Here's what you wanted</text><line x1="275" y1="440" x2="75" y2="440" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="575" y="488" style="text-anchor: middle;" class="messageText">I don't think it's him</text><line x1="675" y1="495" x2="475" y2="495" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="523" style="text-anchor: middle;" class="messageText">He's not  fan@movies.com</text><line x1="475" y1="530" x2="275" y2="530" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="558" style="text-anchor: middle;" class="messageText">I don't think you are fan@movies.com</text><line x1="275" y1="565" x2="75" y2="565" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><line x1="65" y1="320" x2="685" y2="320" class="loopLine"></line><line x1="685" y1="320" x2="685" y2="575" class="loopLine"></line><line x1="65" y1="575" x2="685" y2="575" class="loopLine"></line><line x1="65" y1="320" x2="65" y2="575" class="loopLine"></line><line x1="65" y1="450" x2="685" y2="450" class="loopLine" style="stroke-dasharray: 3px, 3px;"></line><polygon points="65,320 115,320 115,333 106.6,340 65,340" class="labelBox"></polygon><text x="72.5" y="335" class="labelText"><tspan x="72.5">alt</tspan></text><text x="375" y="335" style="text-anchor: middle;" class="loopText"><tspan x="375">[ Authenticated + Authorized ]</tspan></text><text x="375" y="465" style="text-anchor: middle;" class="loopText"><tspan x="375">[ Not authenticated ]</tspan></text></g><g><rect x="0" y="595" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="627.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">User</tspan></text></g><g><rect x="200" y="595" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="627.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Browser</tspan></text></g><g><rect x="400" y="595" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="627.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">Secured resource</tspan></text></g><g><rect x="600" y="595" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="627.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="675" dy="0">Identity manager</tspan></text></g></svg>
+  }</style><g></g><g><line id="actor505" x1="75" y1="5" x2="75" y2="855" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">User</tspan></text></g><g><line id="actor506" x1="275" y1="5" x2="275" y2="855" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Browser</tspan></text></g><g><line id="actor507" x1="475" y1="5" x2="475" y2="855" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="400" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">UI</tspan></text></g><g><line id="actor508" x1="675" y1="5" x2="675" y2="855" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="600" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="675" dy="0">A&amp;A manager</tspan></text></g><g><line id="actor509" x1="875" y1="5" x2="875" y2="855" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="800" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="875" y="32.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="875" dy="0">Secured resource</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" style="stroke-dasharray: 0px, 0px;" stroke-width="1px" d="M 9,2 V 6 L16,4 Z"></path><path fill="none" stroke="#000000" style="stroke-dasharray: 0px, 0px;" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7"></path></marker></defs><defs><marker id="sequencenumber" refX="15" refY="15" markerWidth="60" markerHeight="40" orient="auto"><circle cx="15" cy="15" r="6"></circle></marker></defs><g><text x="175" y="93" style="text-anchor: middle;" class="messageText">I want to use a secure endpoint</text><line x1="75" y1="100" x2="275" y2="100" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="128" style="text-anchor: middle;" class="messageText">A user wants to use a secure endpoint i need</text><line x1="275" y1="135" x2="475" y2="135" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="163" style="text-anchor: middle;" class="messageText">This can be done but i need to know who he is first</text><line x1="475" y1="170" x2="275" y2="170" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="198" style="text-anchor: middle;" class="messageText">Who are you ?</text><line x1="275" y1="205" x2="75" y2="205" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="258" style="text-anchor: middle;" class="messageText">I'm email: fan@movies.com pass: 12345</text><line x1="75" y1="265" x2="275" y2="265" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="313" style="text-anchor: middle;" class="messageText">I'm email, pass, SMS code, ....</text><line x1="75" y1="320" x2="275" y2="320" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><line x1="65" y1="215" x2="285" y2="215" class="loopLine"></line><line x1="285" y1="215" x2="285" y2="330" class="loopLine"></line><line x1="65" y1="330" x2="285" y2="330" class="loopLine"></line><line x1="65" y1="215" x2="65" y2="330" class="loopLine"></line><line x1="65" y1="275" x2="285" y2="275" class="loopLine" style="stroke-dasharray: 3px, 3px;"></line><polygon points="65,215 115,215 115,228 106.6,235 65,235" class="labelBox"></polygon><text x="72.5" y="230" class="labelText"><tspan x="72.5">alt</tspan></text><text x="175" y="230" style="text-anchor: middle;" class="loopText"><tspan x="175">[ 1 factor authentication ]</tspan></text><text x="175" y="290" style="text-anchor: middle;" class="loopText"><tspan x="175">[ n factor autentication ]</tspan></text></g><g><text x="475" y="358" style="text-anchor: middle;" class="messageText">Should be fan@movies.com</text><line x1="275" y1="365" x2="675" y2="365" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="475" y="393" style="text-anchor: middle;" class="messageText">Yes it's him this is an [authorization code] you can get a token with it</text><line x1="675" y1="400" x2="275" y2="400" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="475" y="428" style="text-anchor: middle;" class="messageText">cool this is my [authorization code] can i have a [authorization token] to let him use a resource</text><line x1="275" y1="435" x2="675" y2="435" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="475" y="463" style="text-anchor: middle;" class="messageText">sure fan@movies.com this is your  [authorization token]</text><line x1="675" y1="470" x2="275" y2="470" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="498" style="text-anchor: middle;" class="messageText">I have this [authorization token] to let fan@movies.com use a protected resource</text><line x1="275" y1="505" x2="475" y2="505" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="675" y="533" style="text-anchor: middle;" class="messageText">I have this [authorization token] to let fan@movies.com use a protected resource</text><line x1="475" y1="540" x2="875" y2="540" class="messageLine0" stroke-width="2" stroke="black" style="fill: none;" marker-end="url(#arrowhead)"></line></g><g><text x="675" y="593" style="text-anchor: middle;" class="messageText">Ok fan@movies.com can use this resource</text><line x1="875" y1="600" x2="475" y2="600" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="628" style="text-anchor: middle;" class="messageText">user is authorized to use this resource</text><line x1="475" y1="635" x2="275" y2="635" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="175" y="663" style="text-anchor: middle;" class="messageText">Here you are your requested endpoint</text><line x1="275" y1="670" x2="75" y2="670" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="675" y="718" style="text-anchor: middle;" class="messageText">I don't think he is fan@movies.com</text><line x1="875" y1="725" x2="475" y2="725" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><text x="375" y="753" style="text-anchor: middle;" class="messageText">this user is not authorized to use this endpoint</text><line x1="475" y1="760" x2="275" y2="760" style="stroke-dasharray: 3px, 3px; fill: none;" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)"></line></g><g><line x1="65" y1="550" x2="885" y2="550" class="loopLine"></line><line x1="885" y1="550" x2="885" y2="770" class="loopLine"></line><line x1="65" y1="770" x2="885" y2="770" class="loopLine"></line><line x1="65" y1="550" x2="65" y2="770" class="loopLine"></line><line x1="65" y1="680" x2="885" y2="680" class="loopLine" style="stroke-dasharray: 3px, 3px;"></line><polygon points="65,550 115,550 115,563 106.6,570 65,570" class="labelBox"></polygon><text x="72.5" y="565" class="labelText"><tspan x="72.5">alt</tspan></text><text x="475" y="565" style="text-anchor: middle;" class="loopText"><tspan x="475">[ Authenticated ]</tspan></text><text x="475" y="695" style="text-anchor: middle;" class="loopText"><tspan x="475">[ Not authenticated ]</tspan></text></g><g><rect x="0" y="790" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="822.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="75" dy="0">User</tspan></text></g><g><rect x="200" y="790" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="822.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="275" dy="0">Browser</tspan></text></g><g><rect x="400" y="790" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="822.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="475" dy="0">UI</tspan></text></g><g><rect x="600" y="790" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="822.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="675" dy="0">A&amp;A manager</tspan></text></g><g><rect x="800" y="790" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="875" y="822.5" style="text-anchor: middle;" dominant-baseline="central" alignment-baseline="central" class="actor"><tspan x="875" dy="0">Secured resource</tspan></text></g></svg>

@@ -27,7 +27,7 @@ The WWW-Authenticate header contains a **realm attribute, which identifies the s
 
 When the web client has obtained a user ID and password, it resends the original request with an Authorization header. Alternatively, the client can send the Authorization header when it makes its original request, and this header might be accepted by the server, avoiding the challenge and response process. 
 
-The format of the Authorization header is a base64 encoded string containing 2 factors (user and password):
+The format of the Authorization header is a base64 encoded string containing two elements (user and password):
 
 ```http
 Authorization: Basic dXN1cjIDIANXNzd29yZA==
@@ -53,10 +53,10 @@ JSON Web Token (JWT) is an Internet standard for creating JSON-based access toke
 
 Here are some scenarios where JSON Web Tokens are useful:
 
-- **Authorization**: This is the most common scenario for using JWT. **Once the user is logged in**, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.
+- **Distributed authentication**: This is the most common scenario for using JWT. **Once the user is logged in**, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that needs to verify that user identity. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.
 - Information Exchange: JSON Web Tokens are a good way of securely transmitting information between parties. Because JWTs can be signed - for example, using public/private key pairs - you can be sure the senders are who they say they are. Additionally, as the signature is calculated using the header and the payload, you can also verify that the content hasn't been tampered with.
 
-![JWT token authorization](/img/api/security/jwt-token.svg)
+![JWT token authentication](/img/api/security/jwt-token.svg)
 
 ### Use
 
@@ -76,11 +76,11 @@ JSON web tokens may contain session state. But if project requirements allow **s
 
 Software security architect Kurt Rodarmer points out additional **JWT design vulnerabilities around cryptographic signing keys** and a significant vulnerability that exposes a library’s JSON parser to open attack. This is a direct result of choosing JSON to express the token header, and is more difficult to mitigate. 
 
-Although JWT is not suitable for resource authorization it's a straightforward mechanism. It's simplicity allows developer to easily achieve authentication when performing system integration (especially when we want to perform legacy systems integration).
+JWT it's a straightforward mechanism, it's simplicity allows developer to easily achieve authentication when performing system integration (especially when we want to perform legacy systems integration).
 
 ## OAuth
 
-OAuth is an open standard that allows users to **grant access to applications without sharing passwords with them**. The latest version of the standard, OAuth 2.0, is the industry-standard protocol for authorization. It has been adopted by several companies, including Amazon, Google, Facebook, GitHub, Stripe, and Slack.
+OAuth is an open standard that allows users to **grant access to applications without sharing passwords with them**. The latest version of the standard, OAuth 2.0, is the industry-standard protocol for authentication and authorization. It has been adopted by several companies, including Amazon, Google, Facebook, GitHub, Stripe, and Slack.
 
 The biggest benefit of OAuth is that users do not need to share passwords with applications. For example, say TripAdvisor wants to build an application that will use a user's Facebook identity, profile, friend list, and other Facebook data. With OAuth, TripAdvisor can redirect that user to Facebook, where they can authorize TripAdvisor to access their information. After the user authorizes the sharing of data, TripAdvisor can then call the Facebook API to fetch this information. 
 

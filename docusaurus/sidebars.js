@@ -15,8 +15,7 @@
 
 module.exports = {
   docs: {
-    "Introduction": ['what-is-an-api', 'the-business-case-for-api'],
-    "Securing API": ['security'],
+    "Introduction": ['what-is-an-api', 'the-business-case-for-api', 'security'],
     "Choosing API": [
         'picking-the-right-paradigm',
         {

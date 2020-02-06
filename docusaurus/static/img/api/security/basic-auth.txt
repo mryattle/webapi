@@ -6,7 +6,7 @@ sequenceDiagram
     User->>Browser: I'm email: fan@movies.com pass: 12345
     Browser->>Secured resource: fan@movies.com is saying he wants to use a secure endpoint
     Secured resource->>Identity manager: Let me see if it's really him
-    alt Authenticated + Authorized
+    alt Authenticated
         Identity manager-->>Secured resource: Yes he's fan@movies.com
         Secured resource-->>Browser: Ok fan@movies.com here is you resource
         Browser-->>User: Here's what you wanted

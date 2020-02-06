@@ -1,7 +1,7 @@
 sequenceDiagram
     Browser->>Secured resource: i have fan@movies.com token to use a secure endpoint
-    alt Authorized
-        Secured resource-->>Browser: OK this token authorize him to use this resource
-    else Not authorized
-        Secured resource-->>Browser: He's fan@movies.com but with this token he cannot use this resource
+    alt Authenticated
+        Secured resource-->>Browser: He's fan@movies.com and he can use this resource
+    else Not authenticated
+        Secured resource-->>Browser: He's not fan@movies.com
     end

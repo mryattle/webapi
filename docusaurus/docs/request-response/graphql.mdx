@@ -5,7 +5,7 @@ title: GraphQL
 
 GraphQL is a query language for APIs that has gained significant traction recently. It was developed internally by Facebook in 2012 before being publicly released in 2015 and has been adopted by API providers like GitHub, Yelp, and Pinterest. GraphQL allows clients to define the structure of the data required, and the server returns exactly that structure.
 
-Unlike REST and RPC APIs, GraphQL APIs need only a single URL endpoint.
+Unlike REST and RPC APIs, GraphQL APIs **need only a single URL endpoint**. This can be an advantage when versioning APIs
 
 Similarly, you do not need different HTTP verbs to describe the operation. Instead, you indicate in the JSON body whether you're performing a query (reading) or a mutation (writing). GraphQL APIs support GET and POST verbs.  Despite this using **POST verb is more convinent** because using GET querystring force the user to transalte JSON inside url.
 
@@ -16,6 +16,18 @@ GraphQL has a few key advantages over REST and RPC:
 - Smaller payload size  - REST and RPC APIs often end up responding with data that clients might not ever use. With GraphQL, because clients can exactly specify what they need, the payload sizes can be smaller. GraphQL queries return predictable results while giving clients control over the data that is returned. 
 - Strongly typed - GraphQL is strongly typed. At development time, GraphQL type checking helps in ensuring that a query is syntactically correct and valid. This makes building high-quality, less error-prone clients easy. 
 - Introspection - Although there are external solutions like Swagger that help make exploring REST APIs easy, GraphQL is natively discoverable. It comes with GraphiQL, an in-browser IDE for exploring GraphQL. It lets users write, validate, and test GraphQL queries in a browser. 
+
+GraphQL is an architectural style that combine all best properties from it's predecessors REST and RPC to fulfill the request-response paradigm but also allow users to interact with GraphQL services in an event-driven way.
+
+A **GraphQL schema** is at the core of any GraphQL server implementation. It **describes the functionality** available to the client applications that  connect to it. We can use any programming language to create a GraphQL  schema and build an interface around it.
+
+The GraphQL runtime defines a generic graph-based schema to publish the  capabilities of the data service it represents. Client applications can  query the schema within its capabilities. This approach decouples  clients from servers and allows both to evolve and scale independently.
+
+The main GraphQL operations are:
+
+- **Queries**: used to read or fetch data from the service
+- **Mutations**: used to  write data to the service
+- **Subscriptions**: used to listen to data changes in an **event-driven way**, subscriptions simplifies real-time services development process giving to the client the ability to subscribe specific remote functions
 
 Although GraphQL has many advantages, one of its drawbacks is the complexity it adds for the API provider. The server needs to do additional processing to parse complex queries and verify parameters. Optimizing performance of GraphQL queries can be difficult, too. Internally, within a company, it's easy to predict the use cases and debug performance bottlenecks. When working with external developers, those use cases become difficult to understand and optimize for. When opening up GraphQL to third parties, you move the expense of managing multiple incoming requests to composing complicated queries on the backend depending on the request, the performance and impact to infrastructure can be highly variable.
 
